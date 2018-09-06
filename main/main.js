@@ -74,8 +74,6 @@ const calculatuPromotionItem = (purchaseList) => {
         })
 };
 
-
-
 const computeTotalAndSave = (itemList) => {
     const total = _.sumBy(Object.values(itemList["purchaseList"]),
         item=> item.price * item.count);
@@ -94,8 +92,13 @@ const renderInventory = (itemList) => {
         ;
 };
 
-const renderHeading = () => {
-    return "***<没钱赚商店>购物清单***\n";
+
+const getRealSubPrice = (barcode,itemList) => {
+    return itemList["purchaseList"][barcode].price
+        * (
+            itemList["purchaseList"][barcode].count
+            - (itemList["saveList"][barcode] ? itemList["saveList"][barcode].count : 0)
+        );
 };
 
 const renderItems = (itemList) => {
@@ -105,12 +108,8 @@ const renderItems = (itemList) => {
     },"");
 };
 
-const getRealSubPrice = (barcode,itemList) => {
-    return itemList["purchaseList"][barcode].price
-        * (
-            itemList["purchaseList"][barcode].count
-            - (itemList["saveList"][barcode] ? itemList["saveList"][barcode].count : 0)
-        );
+const renderHeading = () => {
+    return "***<没钱赚商店>购物清单***\n";
 };
 
 const renderSaveItems = (itemList) => {
